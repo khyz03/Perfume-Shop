@@ -1,0 +1,776 @@
+<html>
+<head>
+    <title>Quad Core's Perfume Shop</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/0GsKj8y/image-2024-12-25-221422674.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f6f6f6;
+            padding: 40px;
+            color: #333;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background-color: #ffffff;
+            border: 2px solid #454f66;
+            border-radius: 8px;
+            text-align: center;
+            padding: 15px;
+            transition: box-shadow 0.4s ease, transform 0.4s ease;
+        }
+
+        .product:hover {
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.20);
+            transform: scale(1.06);
+        }
+
+        .product img {
+            width: 200px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .product h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .product .rating {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .product .price {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .product button {
+            display: inline-block;
+            width: 100%;
+            padding: 10px 0;
+            border: 1px solid #2c3e50;
+            color: #2c3e50;
+            border-radius: 4px;
+            background-color: transparent;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .product button:hover {
+            background-color: #2c3e50;
+            color: #fff;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 8px;
+            width: 500px;
+            padding: 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        .modal-content img {
+            width: 100%;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .modal-content .price {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .modal-content .options {
+            margin-bottom: 20px;
+        }
+
+        .modal-content .options label {
+            font-size: 14px;
+            color: #555;
+            margin-right: 10px;
+        }
+
+        .modal-content .options input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .modal-content .quantity {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-content .quantity input {
+            width: 50px;
+            text-align: center;
+            margin: 0 10px;
+            padding: 5px;
+        }
+
+        .modal-content button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #2c3e50;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .modal-content .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Perfume Collection</h1>
+    </div>
+
+    <div class="product-container">
+        <!-- Each product structure -->
+        
+        <!-- Debonair -->
+        <div class="product">
+            <img src="https://i.ibb.co/CMVLFpG/DEBONAIR-25e6342d-24c6-4323-a54c-b1dfcce70c15.webp" alt="Debonair"></a>
+            <h3>Debonair</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Debonair')">Choose options</button>
+        </div>
+        <!-- Modal for Debonair -->
+        <div class="modal" id="DebonairModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Debonair')">×</span>
+                <img src="https://i.ibb.co/CMVLFpG/DEBONAIR.webp" alt="Debonair">
+                <h3>Debonair</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeDebonair" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeDebonair" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeDebonair" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Debonair')">-</button>
+                    <input type="number" value="1" min="1" id="quantityDebonair">
+                    <button onclick="increaseQuantity('Debonair')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <!-- Sailor -->
+        <div class="product">
+            <img src="https://i.ibb.co/Z6fFs6N/SAILOR-76d117c9-9d5c-4fb7-88bf-7cf3c5bddf16.jpg" alt="Sailor"></a>
+            <h3>Sailor</h3>
+            <div class="rating">★★★★★ (23)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Sailor')">Choose options</button>
+        </div>
+        <div class="modal" id="SailorModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Sailor')">×</span>
+                <img src="https://i.ibb.co/Z6fFs6N/SAILOR-76d117c9-9d5c-4fb7-88bf-7cf3c5bddf16.jpg" alt="Sailor">
+                <h3>Sailor</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeSailor" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeSailor" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeSailor" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Sailor')">-</button>
+                    <input type="number" value="1" min="1" id="quantitySailor">
+                    <button onclick="increaseQuantity('Sailor')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/QYnkDLH/GENTLEMAN-160fd586-621e-419e-8871-0f76d6331985.jpg" alt="Gentleman"></a>
+            <h3>Gentleman</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Gentleman')">Choose options</button>
+        </div>
+        <!-- Modal for Gentleman -->
+        <div class="modal" id="GentlemanModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Gentleman')">×</span>
+                <img src="https://i.ibb.co/QYnkDLH/GENTLEMAN-160fd586-621e-419e-8871-0f76d6331985.jpg" alt="Gentleman">
+                <h3>Gentleman</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeGentleman" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeGentleman" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeGentleman" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Gentleman')">-</button>
+                    <input type="number" value="1" min="1" id="quantityGentleman">
+                    <button onclick="increaseQuantity('Gentleman')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/tbmP4RH/Royalty-1742c001-1593-4cb0-ad74-3bbea84180fa.webp" alt="Royalty"></a>
+            <h3>Royalty</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Royalty')">Choose options</button>
+        </div>
+        <!-- Modal for Royalty -->
+        <div class="modal" id="RoyaltyModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Royalty')">×</span>
+                <img src="https://i.ibb.co/tbmP4RH/Royalty-1742c001-1593-4cb0-ad74-3bbea84180fa.webp" alt="Royalty">
+                <h3>Royalty</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeRoyalty" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeRoyalty" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeRoyalty" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Royalty')">-</button>
+                    <input type="number" value="1" min="1" id="quantityRoyalty">
+                    <button onclick="increaseQuantity('Royalty')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/6J958BW/SILVER-e051b7ae-2e46-4dca-9228-8fb1edb0600a.jpg" alt="Silver"></a>
+            <h3>Silver</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Silver')">Choose options</button>
+        </div>
+        <!-- Modal for Silver -->
+        <div class="modal" id="SilverModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Silver')">×</span>
+                <img src="https://i.ibb.co/6J958BW/SILVER-e051b7ae-2e46-4dca-9228-8fb1edb0600a.jpg" alt="Silver">
+                <h3>Silver</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeSilver" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeSilver" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeSilver" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Silver')">-</button>
+                    <input type="number" value="1" min="1" id="quantitySilver">
+                    <button onclick="increaseQuantity('Silver')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/Vgz1hNQ/SPARROW-cf40cb09-06a7-4bda-b227-f3df04abdcad.webp" alt="Sparrow"></a>
+            <h3>Sparrow</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Sparrow')">Choose options</button>
+        </div>
+        <!-- Modal for Sparrow -->
+        <div class="modal" id="SparrowModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Sparrow')">×</span>
+                <img src="https://i.ibb.co/Vgz1hNQ/SPARROW-cf40cb09-06a7-4bda-b227-f3df04abdcad.webp" alt="Sparrow">
+                <h3>Sparrow</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeSparrow" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeSparrow" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeSparrow" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Sparrow')">-</button>
+                    <input type="number" value="1" min="1" id="quantitySparrow">
+                    <button onclick="increaseQuantity('Sparrow')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/Dg5d00m/OLDMONEY.webp" alt="Old Money"></a>
+            <h3>Old Money</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱770.00</div>
+            <button onclick="openModal('Old Money')">Choose options</button>
+        </div>
+        <!-- Modal for Old Money -->
+        <div class="modal" id="Old MoneyModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Old Money')">×</span>
+                <img src="https://i.ibb.co/Dg5d00m/OLDMONEY.webp" alt="Old Money">
+                <h3>Old Money</h3>
+                <div class="price">₱770.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeOld Money" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeOld Money" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeOld Money" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Old Money')">-</button>
+                    <input type="number" value="1" min="1" id="quantityOld Money">
+                    <button onclick="increaseQuantity('Old Money')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/J28tC5t/OBSESSION-2311a170-fa7c-4737-8057-394851882963.webp" alt="Obsession"></a>
+            <h3>Obsession</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Obsession')">Choose options</button>
+        </div>
+        <!-- Modal for Obsession -->
+        <div class="modal" id="ObsessionModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Obsession')">×</span>
+                <img src="https://i.ibb.co/J28tC5t/OBSESSION-2311a170-fa7c-4737-8057-394851882963.webp" alt="Obsession">
+                <h3>Obsession</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeObsession" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeObsession" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeObsession" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Obsession')">-</button>
+                    <input type="number" value="1" min="1" id="quantityObsession">
+                    <button onclick="increaseQuantity('Obsession')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/McPcwRs/EXTREME-a859a13d-2c57-483a-b6e5-db89595d5865.webp" alt="Extreme"></a>
+            <h3>Extreme</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Extreme')">Choose options</button>
+        </div>
+        <!-- Modal for Extreme -->
+        <div class="modal" id="ExtremeModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Extreme')">×</span>
+                <img src="https://i.ibb.co/McPcwRs/EXTREME-a859a13d-2c57-483a-b6e5-db89595d5865.webp" alt="Extreme">
+                <h3>Extreme</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeExtreme" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeExtreme" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeExtreme" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Extreme')">-</button>
+                    <input type="number" value="1" min="1" id="quantityExtreme">
+                    <button onclick="increaseQuantity('Extreme')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/QF59HRM/ACHILLES-a6cae24f-7213-4ee4-b5b9-9fa6984fd92f.webp" alt="Achilles"></a>
+            <h3>Achilles</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Achilles')">Choose options</button>
+        </div>
+        <!-- Modal for Achilles -->
+        <div class="modal" id="AchillesModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Achilles')">×</span>
+                <img src="https://i.ibb.co/QF59HRM/ACHILLES-a6cae24f-7213-4ee4-b5b9-9fa6984fd92f.webp" alt="Achilles">
+                <h3>Achilles</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeAchilles" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeAchilles" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeAchilles" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Achilles')">-</button>
+                    <input type="number" value="1" min="1" id="quantityAchilles">
+                    <button onclick="increaseQuantity('Achilles')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/zXFSs1y/CONNOISSEUR-436cff4a-21f8-4abc-896c-e2fb9d75c858.webp" alt="Connoisseur"></a>
+            <h3>Connoisseur</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Connoisseur')">Choose options</button>
+        </div>
+        <!-- Modal for Connoisseur -->
+        <div class="modal" id="ConnoisseurModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Connoisseur')">×</span>
+                <img src="https://i.ibb.co/zXFSs1y/CONNOISSEUR-436cff4a-21f8-4abc-896c-e2fb9d75c858.webp" alt="Connoisseur">
+                <h3>Connoisseur</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeConnoisseur" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeConnoisseur" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeConnoisseur" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Connoisseur')">-</button>
+                    <input type="number" value="1" min="1" id="quantityConnoisseur">
+                    <button onclick="increaseQuantity('Connoisseur')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/xDCg9Rm/DYLAN-87081cf1-fec8-434a-b708-c5f76dd93312.webp" alt="Dylan"></a>
+            <h3>Dylan</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Dylan')">Choose options</button>
+        </div>
+        <!-- Modal for Dylan -->
+        <div class="modal" id="DylanModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Dylan')">×</span>
+                <img src="https://i.ibb.co/xDCg9Rm/DYLAN-87081cf1-fec8-434a-b708-c5f76dd93312.webp" alt="Dylan">
+                <h3>Dylan</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeDylan" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeDylan" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeDylan" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Dylan')">-</button>
+                    <input type="number" value="1" min="1" id="quantityDylan">
+                    <button onclick="increaseQuantity('Dylan')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/sVDqJmT/CRIMSON-f1270408-5b2b-40e2-afcc-b070b84d547c.webp" alt="Crimson"></a>
+            <h3>Crimson</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Crimson')">Choose options</button>
+        </div>
+        <!-- Modal for Crimson -->
+        <div class="modal" id="CrimsonModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Crimson')">×</span>
+                <img src="https://i.ibb.co/sVDqJmT/CRIMSON-f1270408-5b2b-40e2-afcc-b070b84d547c.webp" alt="Crimson">
+                <h3>Crimson</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeCrimson" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeCrimson" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeCrimson" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Crimson')">-</button>
+                    <input type="number" value="1" min="1" id="quantityCrimson">
+                    <button onclick="increaseQuantity('Crimson')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/F40fRT2/INTENSE-41f59145-7e61-4648-beea-75d342b2d67d.webp" alt="Intense"></a>
+            <h3>Intense</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Intense')">Choose options</button>
+        </div>
+        <!-- Modal for Intense -->
+        <div class="modal" id="IntenseModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Intense')">×</span>
+                <img src="https://i.ibb.co/F40fRT2/INTENSE-41f59145-7e61-4648-beea-75d342b2d67d.webp" alt="Intense">
+                <h3>Intense</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeIntense" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeIntense" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeIntense" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Intense')">-</button>
+                    <input type="number" value="1" min="1" id="quantityIntense">
+                    <button onclick="increaseQuantity('Intense')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/6v5CSc2/AMETHYSTE-208cb995-5cf2-485d-968c-3d0fb90d34d7.webp" alt="Amethyste"></a>
+            <h3>Amethyste</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Amethyste')">Choose options</button>
+        </div>
+        <!-- Modal for Amethyste -->
+        <div class="modal" id="AmethysteModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Amethyste')">×</span>
+                <img src="https://i.ibb.co/6v5CSc2/AMETHYSTE-208cb995-5cf2-485d-968c-3d0fb90d34d7.webp" alt="Amethyste">
+                <h3>Amethyste</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeAmethyste" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeAmethyste" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeAmethyste" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Amethyste')">-</button>
+                    <input type="number" value="1" min="1" id="quantityAmethyste">
+                    <button onclick="increaseQuantity('Amethyste')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://i.ibb.co/9vxwBLN/CALLME.webp" alt="Call Me"></a>
+            <h3>Call Me</h3>
+            <div class="rating">★★★★★ (20)</div>
+            <div class="price">From ₱720.00</div>
+            <button onclick="openModal('Call Me')">Choose options</button>
+        </div>
+        <!-- Modal for Call Me -->
+        <div class="modal" id="Call MeModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('Call Me')">×</span>
+                <img src="https://i.ibb.co/9vxwBLN/CALLME.webp" alt="Call Me">
+                <h3>Call Me</h3>
+                <div class="price">₱720.00</div>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="sizeCall Me" value="30ml"> 30ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeCall Me" value="50ml"> 50ml
+                    </label>
+                    <label>
+                        <input type="radio" name="sizeCall Me" value="100ml"> 100ml
+                    </label>
+                </div>
+                <div class="quantity">
+                    <label>Quantity:</label>
+                    <button onclick="decreaseQuantity('Call Me')">-</button>
+                    <input type="number" value="1" min="1" id="quantityCall Me">
+                    <button onclick="increaseQuantity('Call Me')">+</button>
+                </div>
+                <button>Add to cart</button>
+            </div>
+        </div>
+
+        <!-- Repeat similar structure for all other products -->
+
+    </div>
+
+    <script>
+        function openModal(productName) {
+            document.getElementById(productName + 'Modal').style.display = 'flex';
+        }
+
+        function closeModal(productName) {
+            document.getElementById(productName + 'Modal').style.display = 'none';
+        }
+
+        function increaseQuantity(productName) {
+            const input = document.getElementById('quantity' + productName);
+            input.value = parseInt(input.value) + 1;
+        }
+
+        function decreaseQuantity(productName) {
+            const input = document.getElementById('quantity' + productName);
+            if (input.value > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        }
+    </script>
+</body>
+</html>
